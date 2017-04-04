@@ -15,7 +15,8 @@ class TestItemisedBilling < Test::Unit::TestCase
 
   def test_number_of_rows_returned
 		 itemised_bill = ItemisedBilling.new
-		 assert_equal itemised_bill.itemised_bill.size, 35  	
+		 assert_equal itemised_bill.itemised_bill('./ItemisedBill.csv').size, 35
+     assert_equal itemised_bill.itemised_bill('./ItemisedBill2.csv').size, 107  	
   end
 
   def test_phone_calls_for_provider
