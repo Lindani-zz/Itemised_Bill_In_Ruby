@@ -24,14 +24,11 @@ class ItemisedBilling
 
 	def convert_call_duration_to_seconds
 		item_list = itemised_bill()
-
-		result = Hash.new { |h, k| h[k] = [] }.tap do |h|       
-			item_list.each do |item|
-				h[item['Number']] << Time.parse("1 Jan 1970 #{item['Duration']} UTC").to_i     
-			end
+		       
+		item_list.map do |item|
+			dt = Time.parse("1 Jan 1970 #{item['Duration']} UTC")
+			seconds = dt.hour * 3600 + dt.min * 60 + dt.sec
+			[item['Number']] << seconds     
 		end
 	end
 end
-
-
-
