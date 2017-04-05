@@ -36,4 +36,11 @@ class ItemisedBilling
 			[item['Number']] << seconds     
 		end
 	end
+
+	def order_calls_by_ascending_duration
+		call_duration_list = convert_call_duration_to_seconds
+		call_duration_list.sort_by do |number, duration|
+			duration 
+		end
+	end
 end
