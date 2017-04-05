@@ -42,4 +42,8 @@ class TestItemisedBilling < Test::Unit::TestCase
   	assert_not_equal @itemised_bill.convert_call_duration_to_seconds[0], ["08324 01145", 334]
     assert_equal @itemised_bill.convert_call_duration_to_seconds[1], ["0838758090", 94]
   end
+
+  def test_order_calls_by_ascending_duration
+    assert_equal @itemised_bill.order_calls_by_ascending_duration[0..3], [["0828907600", 0], ["0828009712", 0], ["0821302398", 34], ["0824501276", 34]]
+  end
 end
