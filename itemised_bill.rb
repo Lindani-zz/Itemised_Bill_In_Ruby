@@ -3,11 +3,16 @@ require 'date'
 require 'time'
 class ItemisedBilling
 
-	@@csv_file_path ='./ItemisedBill.csv'
+	# Dir.glob('*.csv').each do|f|
+ # 		@@csv_file_path = f
+	# end
+	@@csv_file_path = './ItemisedBill.csv'
 
 	def itemised_bill csv_file_path
-		csv = CSV.new(File.read(csv_file_path), headers: true)
-		csv.to_a.map(&:to_h)
+		if File.exist?(csv_file_path)
+			csv = CSV.new(File.read(csv_file_path, :encoding => 'utf-8'), headers: true)
+			csv.to_a.map(&:to_h)
+		end
 	end
 
 	def phone_calls_for_provider provider
