@@ -3,11 +3,9 @@ require 'date'
 require 'time'
 class ItemisedBilling
 
-	def item_lists_of_all_files
-		Dir.glob('*.csv').each do|f|
-			itemised_bill(f)
-		end	
-	end
+	def initialize csv_path
+    @itemised_bill_list = itemised_bill(csv_path)
+  end
 
 	def itemised_bill csv_file_path
 		if File.exist?(csv_file_path)
@@ -16,9 +14,15 @@ class ItemisedBilling
 		end
 	end
 
+	def total_phone_calls
+		@itemised_bill_list.map do |e| 
+			e 
+		end
+	end
+
 	def phone_calls_for_provider provider
-		item_list = item_lists_of_all_files
-		item_list.map do |x| 
+	
+		@itemised_bill_list.map do |x| 
 			if x['Provider'] == provider
 				x['Number']
 			end
@@ -29,13 +33,12 @@ class ItemisedBilling
 		phone_calls_for_provider(provider)	
 	end
 
-	def convert_call_duration_to_seconds
-		item_list = item_lists_of_all_files       
-		item_list.map do |item|
+	def convert_call_duration_to_seconds      
+		@itemised_bill_list.map do |item|
 			dt = Time.parse("1 Jan 1970 #{item['Duration']} UTC")
 			seconds = dt.hour * 3600 + dt.min * 60 + dt.sec
 			[item['Number']] << seconds     
-		end
+		end.compact
 	end
 
 	def order_calls_by_ascending_duration
